@@ -2,16 +2,29 @@ import re
 from typing import Annotated
 
 from bcrypt import checkpw, gensalt, hashpw
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from jose import jwt
 
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DB_NAME = os.getenv("POSTGRES_DB")
+DB_USER = os.getenv("POSTGRES_USER")
+DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+DB_HOST = "db"
+DB_PORT = 5432
+
+# Cambiar la configuración de conexión
+postgres_url = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# postgres_url = "postgresql://myuser:mysecretpassword@localhost:5432/mydatabase"
+engine = create_engine(postgres_url)
 
 connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, connect_args=connect_args)
 
 class User(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)

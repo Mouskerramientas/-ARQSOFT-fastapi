@@ -9,6 +9,30 @@
 - Nicolás Rodríguez
 - Daniel Velasco
 
+## Pasos para ejecutar con docker:
+
+1. Crear un archivo `.env` para guardar las variables de entorno. Ej:
+
+```sh
+POSTGRES_DB=mydatabase
+POSTGRES_USER=myuser
+POSTGRES_PASSWORD=mysecretpassword
+```
+
+2. Ejecutar docker con:
+
+```sh
+docker compose up
+```
+
+Para actualizar las imágenes creadas por docker:
+
+```sh
+docker compose up --build
+```
+
+<hr>
+
 ## Pasos:
 
 1. Crear entorno virtual con python
