@@ -2,15 +2,15 @@
 FROM python
 
 
-WORKDIR /code
+WORKDIR /app
 
 
-COPY ./requirements.txt /code/requirements.txt
+COPY ./requirements.txt /requirements.txt
 
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /requirements.txt
 
 
-COPY . /code/app
+COPY . .
 
-CMD ["fastapi", "run", "app/failures.py", "--port", "80"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
